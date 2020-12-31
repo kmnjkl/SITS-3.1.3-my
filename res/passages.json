@@ -1,0 +1,83 @@
+{
+  "passages": [
+    {
+      "text": "Привет! Как дела?\nНачнём?\nСделай свой выбор:\n(1) Это хороший вариант, как думаешь? [[go to 1->1]]\n(2) Может этот? [[go to 2->2]]\n(3) А как тебе такой? [[go to 3->3]]",
+      "links": [
+        {
+          "name": "go to 1",
+          "link": "1",
+          "pid": "2"
+        },
+        {
+          "name": "go to 2",
+          "link": "2",
+          "pid": "3"
+        },
+        {
+          "name": "go to 3",
+          "link": "3",
+          "pid": "4"
+        }
+      ],
+      "name": "start",
+      "pid": "1",
+      "position": {
+        "x": "541",
+        "y": "183.5"
+      }
+    },
+    {
+      "text": "Пошли домой?\n(1) Тебе сюда. [[go to start->start]]",
+      "links": [
+        {
+          "name": "go to start",
+          "link": "start",
+          "pid": "1"
+        }
+      ],
+      "name": "1",
+      "pid": "2",
+      "position": {
+        "x": "390",
+        "y": "359.5"
+      }
+    },
+    {
+      "text": "Я устал...\n(1) Ладно. [[go to start->start]]",
+      "links": [
+        {
+          "name": "go to start",
+          "link": "start",
+          "pid": "1"
+        }
+      ],
+      "name": "2",
+      "pid": "3",
+      "position": {
+        "x": "540",
+        "y": "359.5"
+      }
+    },
+    {
+      "text": "Быстро спать!!!\n(1) В кровать! [[go to start->start]]",
+      "links": [
+        {
+          "name": "go to start",
+          "link": "start",
+          "pid": "1"
+        }
+      ],
+      "name": "3",
+      "pid": "4",
+      "position": {
+        "x": "690",
+        "y": "359.5"
+      }
+    }
+  ],
+  "name": "qwe",
+  "startnode": "1",
+  "creator": "Twine",
+  "creator_version": "2.3.9",
+  "ifid": "25D96057-3459-42F3-8DA5-03A95D63CE56"
+}
