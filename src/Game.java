@@ -7,33 +7,17 @@ import java.util.Scanner;
 public class Game {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
+//        initialize mapper to parse json with passages from Twine
         ObjectMapper mapper = new ObjectMapper();
-        Passages passages_obj = mapper.readValue(new File("C://Java\\Projects\\SITS-3.1.3-my\\src", "res/passages.json"), Passages.class);
-        Passage start_passage = getPassageByPid(passages_obj, 1);
-        System.out.println(getCleanTextFromText(start_passage.text));
-        int next = sc.nextInt();
-        System.out.println(getCleanTextFromText(getPassageByPid(passages_obj, start_passage.links.get(next-1).pid).text));
-    }
-
-    private static Passage getPassageByPid(Passages passages_obj, int pid) {
-        for (Passage passage: passages_obj.passages) {
-            if (passage.pid == pid) {
-                return passage;
-            }
+//        parse json
+        Passages passages_obj = mapper.readValue(new File("C://Java\\Projects\\SITS-3.1.3-my\\res", "passages.json"), Passages.class);
+//        set start passage pid and set start passage as current passage
+        Passage currentPassage = passages_obj.getStartPassage();
+        currentPassage.printPassage();
+        while(!currentPassage.isLast()) {
+            int next_link = sc.nextInt();
+            currentPassage = passages_obj.getPassageByPid(currentPassage.getPassagePidByLinkNumber(next_link));
+            currentPassage.printPassage();
         }
-        return null;
     }
-
-    private static String getCleanTextFromText(String text) {
-        StringBuilder sbtext = new StringBuilder(text);
-        int i_start = sbtext.lastIndexOf("[[");
-        int i_end = sbtext.lastIndexOf("]]");
-        while (i_start >= 0 && i_end >= 0) {
-            sbtext.delete(i_start, i_end+2);
-            i_start = sbtext.lastIndexOf("[[");
-            i_end = sbtext.lastIndexOf("]]");
-        }
-        return sbtext.toString();
-    }
-
 }

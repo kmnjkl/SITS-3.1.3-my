@@ -1,0 +1,50 @@
+@startuml
+
+class Game {
+    + static main(args:String[]) : void
+}
+
+Passages .> Game
+class Passages {
+	+ passages : List<Passage>
+	+ name : String
+	+ startnode : String
+	+ creator : String
+	+ creator_version : String
+	+ ifid : String
+	
+	+ toString() : String
+	+ getPassageByPid(int pid) : Passage
+}
+
+Passage --o Passages::passages
+class Passage {
+	+ text : String
+	+ links : List<Link>
+	+ name : String
+	+ pid : int
+	+ position : Position
+	
+	+ toString() : String
+	+ getCleanTextFromPassageText() : String
+	+ getPassagePidByLinkNumber(int link_n) : int
+}
+
+Link --o Passage::links
+class Link {
+	+ name : String
+	+ link : String
+	+ pid : int
+	
+	+ toString() : String
+}
+
+Position --o Passage::position
+class Position {
+	+ x : float
+	+ y : float
+	
+	+ toString() : String
+}
+
+@enduml
