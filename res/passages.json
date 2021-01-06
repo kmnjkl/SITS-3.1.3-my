@@ -28,14 +28,14 @@
       "pid": "1",
       "position": {
         "x": "541",
-        "y": "184.1666717529297"
+        "y": "183.1666717529297"
       }
     },
     {
-      "text": "Пошли домой?\n(1) Тебе сюда. [[go to start->start]]",
+      "text": "Пошли домой?\n[[Тебе сюда.->start]]",
       "links": [
         {
-          "name": "go to start",
+          "name": "Тебе сюда.",
           "link": "start",
           "pid": "1"
         }
@@ -48,10 +48,10 @@
       }
     },
     {
-      "text": "Я устал...\n(1) Ладно. [[go to start->start]]",
+      "text": "Я устал...\n[[Ладно.->start]]",
       "links": [
         {
-          "name": "go to start",
+          "name": "Ладно.",
           "link": "start",
           "pid": "1"
         }
@@ -64,10 +64,10 @@
       }
     },
     {
-      "text": "Быстро спать!!!\n(1) В кровать! [[go to start->start]]",
+      "text": "Быстро спать!!!\n[[В кровать!->start]]",
       "links": [
         {
-          "name": "go to start",
+          "name": "В кровать!",
           "link": "start",
           "pid": "1"
         }

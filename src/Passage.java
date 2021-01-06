@@ -35,13 +35,17 @@ public class Passage {
     }
 
     public boolean isLast() {
-        return links.isEmpty() || this.name.equals("end") || this.name.equals("last");
+        return links == null || links.isEmpty() || this.name.equals("end") || this.name.equals("last");
     }
 
     public void printPassage() {
+        System.out.println("\n//=====-=====-=====-=====-=====-=====-=====-=====-=====-=====\\\\");
         System.out.println(this.getCleanTextFromPassageText());
-        for (int i=1; i <= links.size(); i++) {
-            System.out.println(i + "\t" + links.get(i-1).name);
+        if (this.links != null) {
+            for (int i = 1; i <= this.links.size(); i++) {
+                System.out.println(i + "\t" + links.get(i - 1).name);
+            }
         }
+        System.out.println("\\\\=====-=====-=====-=====-=====-=====-=====-=====-=====-=====//");
     }
 }
