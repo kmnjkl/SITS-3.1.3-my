@@ -2,25 +2,83 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Passages {
+//    json attributes (json file received from Twine using Twineson)
     public List<Passage> passages;
     public String name;
     public int startnode;
     public String creator, creator_version, ifid;
 
-    private Passage currentPassage;
+//    constants with headings that can be used in the info passage
+private final String INFO_CHAR_PARAMS_HEADING = "character_parameters";
+private final String INFO_CREDITS_HEADING = "credits";
 
+//    fields which are need for the story to be happening
+//    current passage which should be processed in current stage of the story
+    private Passage currentPassage;
+    private String credits;
+    private CharacterParameter[] charParamsArray;
+
+    //    initialize the story
+//    set some fields, get some information about the quest (from json)
     public void init() {
 //        set start passage as current passage
-        this.currentPassage = this.getStartPassage();
+        this.currentPassage = this.getFirstPassage();
 
-//        info passage
+//        get parameters from info passage
+//        get info passage by name
+        Passage infoPassage = this.getPassageByName("info");
+//        StringBuilder infoSB = new StringBuilder(infoPassage.text);
+//        get info text from passage
+        String infoText = infoPassage.text;
+//        split info text around ';' to get separate statements with quest's info
+        String[] infoStatements = infoText.split(";");
+//        searching for possible statements (headings surrounded by '@')
+        for (String statementText : infoStatements) {
+//            split the statement into heading and content
+            String[] statementParts = statementText.trim().split("@");
+//            check if we can use this statement (check heading)
+            if (statementParts[0].equals(this.INFO_CHAR_PARAMS_HEADING)) {
+//                if statement contains info about character parameters
+                this.setCharParamsFromInfoContent(statementParts[1]);
+            } else if (statementParts[0].equals(this.INFO_CREDITS_HEADING)) {
+//                if statement contains info about credits of this quest
+                this.setCreditsFromInfoContent(statementParts[1]);
+            }
+        }
+    }
+
+//    set credits info defined for this quest in the info passage
+//    string with information from the info passage was received in init() method
+    private void setCreditsFromInfoContent(String infoContent) {
+        this.credits = infoContent.trim();
+    }
+
+//    set character parameters defined for this quest is the info passage
+//    string with parameters from the info passage was received in init() method
+    private void setCharParamsFromInfoContent(String infoContent) {
+//        split string into separate parameters
+        String[] parameters = infoContent.split(",");
+        this.charParamsArray = new CharacterParameter[parameters.length];
+        int i = 0;
+        for (String param: parameters) {
+//            split each parameter into it's name and other info about it (surrounded by '[' and ']')
+            String[] paramParts = param.split("[\\[\\]]");
+//            split parameter info into start value, min value with appropriate passage, max value with appropriate passage
+//            [0] - start value, [1] - min value with appropriate passage, [2] - max value with appropriate passage
+            String[] paramInfoParts = paramParts[1].split("\\|");
+//            split min and max info into values and appropriate passages names
+            String[] minValueParts = paramInfoParts[1].split("=");
+            String[] maxValueParts = paramInfoParts[2].split("=");
+            this.charParamsArray[i] = new CharacterParameter(paramParts[0], Integer.parseInt(paramInfoParts[0]), Integer.parseInt(minValueParts[0]), minValueParts[1], Integer.parseInt(maxValueParts[0]), maxValueParts[1]);
+            i++;
+        }
     }
 
     public void go(Scanner sc, Character player) {
 //        change and print player parameters
 //        print current passage
 //        get link number, change current passage
-        currentPassage.printPassage();
+//        currentPassage.printPassage();
     }
 
     @Override
@@ -35,6 +93,7 @@ public class Passages {
                 '}';
     }
 
+//    method searches for matches of passages (in field passages:List<Passage>) pids and specified int number (pid)
     public Passage getPassageByPid(int pid) {
         for (Passage passage: this.passages) {
             if (passage.pid == pid) {
@@ -44,16 +103,17 @@ public class Passages {
         return null;
     }
 
-    public int getPassagePidByName(String name) {
+    public Passage getPassageByName(String name) {
         for (Passage passage: this.passages) {
             if (passage.name.equals(name)) {
-                return passage.pid;
+                return passage;
             }
         }
-        return -1;
+        return null;
     }
 
-    private Passage getStartPassage() {
+//    method returns the first passage of the quest (as specified in Twine), it's pid is specified in json (Twineson) attribute "startnode", thus getFirstPassage() uses getPassageByPid() to find the first passage by it's pid
+    private Passage getFirstPassage() {
         return this.getPassageByPid(this.startnode);
     }
 }

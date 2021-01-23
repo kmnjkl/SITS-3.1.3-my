@@ -34,7 +34,7 @@ public class Passage {
         int paramsDeltasBeginIndex = name.indexOf(":") + 1;
         String paramsDeltasString = name.substring(paramsDeltasBeginIndex);
         String[] paramsDeltasStringArray = paramsDeltasString.split(" ");
-        for (int i = 0; )
+//        for (int i = 0; )
     }
 
     public String getCleanTextFromPassageText() {
