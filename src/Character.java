@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Character {
     public String name;
     public CharacterParameter[] parameters;
@@ -9,8 +7,15 @@ public class Character {
         this.parameters = parameters;
     }
 
-    public void getName(Scanner sc) {
-        System.out.println("Введите ваше имя: ");
-        this.name = sc.next();
+    public Character(CharacterParameter[] parameters) {
+        this.parameters = parameters;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getParamsText() {
+        return null;
     }
 }

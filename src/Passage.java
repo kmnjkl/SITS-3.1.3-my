@@ -7,7 +7,7 @@ public class Passage {
     public int pid;
     public Position position;
 
-    public int dK, dA, dR;
+    public int[] charParamsDeltas;
 
     @Override
     public String toString() {
@@ -27,14 +27,19 @@ public class Passage {
 //        2. get clean text
 //          print clean text and links
         
-        this.getCharacterParametersDeltas();
+        this.setCharacterParametersDeltas();
     }
 
-    private void getCharacterParametersDeltas() {
+//    get character parameters deltas from passage's name and add them to the array charParamsDeltas
+    private void setCharacterParametersDeltas() {
         int paramsDeltasBeginIndex = name.indexOf(":") + 1;
         String paramsDeltasString = name.substring(paramsDeltasBeginIndex);
         String[] paramsDeltasStringArray = paramsDeltasString.split(" ");
-//        for (int i = 0; )
+        int i = 0;
+        for (String paramDeltaString: paramsDeltasStringArray) {
+            this.charParamsDeltas[i] = Integer.parseInt(paramDeltaString);
+            i++;
+        }
     }
 
     public String getCleanTextFromPassageText() {
